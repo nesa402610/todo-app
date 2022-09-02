@@ -14,8 +14,9 @@ const TodoApp = () => {
     const deleteTaskHandler = (task) => {
         setTasks(tasks.filter(t => t.id !== task.id));
     };
-    const changeStatus = (task) => {
-
+    const changeStatus = (e,task) => {
+        e.target.classList.toggle('completed')
+        task.completed = !task.completed
     };
     return (
         <div className={'todoapp'}>
@@ -31,7 +32,7 @@ const TodoApp = () => {
                 <div className={'todoapp__tasks'}>
                     {tasks.map(task =>
                         <div key={task.name} className={'todoapp__task'}>
-                            <div className={"todoapp__task__state" + (task.completed ? ' completed' : '')}
+                            <div className={"todoapp__task__state"}
                                  onClick={e => changeStatus(e, task)}
                             />
                             <div className="todoapp__task__name">

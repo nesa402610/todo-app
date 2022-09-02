@@ -63,6 +63,9 @@ body {
     border-radius: 50%;
     border: 1px solid var(--VeryDarkGrayishBlue);
 }
+.todoapp__task__state.completed {
+    background: var(--CheckBackground);
+}
 .todoapp__task__name {
     margin-left: 2rem;
     width: 100%;
