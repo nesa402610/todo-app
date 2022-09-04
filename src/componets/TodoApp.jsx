@@ -1,22 +1,38 @@
-import React, {useState} from 'react';
-import Delete from "./UI/delete";
+import React, {useMemo, useState} from 'react';
+import TodoItem from "./todoItem";
 
 const TodoApp = () => {
     const [task, setTask] = useState('');
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState([{id: 1, name: 'test task', isCompleted: false}]);
     // const [left, setLeft] = useState(0);
+    const [sortType, setSortType] = useState(null);
+    const sorted = useMemo(() => {
+        if (sortType === true) {
+            return [...tasks].filter(t => t.isCompleted === true);
+        } else if (sortType === false) {
+            return [...tasks].filter(t => t.isCompleted === false);
+        } else {
+            return tasks;
+        }
+    }, [sortType, tasks]);
+
     const addTask = (e) => {
         if (e.key === 'Enter') {
-            setTasks([...tasks, {id: Date.now(), name: task, completed: 0}]);
+            setTasks([...tasks, {id: Date.now(), name: task, isCompleted: false}]);
             setTask('');
         }
     };
-    const deleteTaskHandler = (task) => {
+    const deleteTask = (task) => {
         setTasks(tasks.filter(t => t.id !== task.id));
     };
-    const changeStatus = (e,task) => {
-        e.target.classList.toggle('completed')
-        task.completed = !task.completed
+    const changeStatus = (id) => {
+        const copy = [...tasks];
+        const current = copy.find(t => t.id === id);
+        current.isCompleted = !current.isCompleted;
+        setTasks(copy);
+    };
+    const clearCompleted = () => {
+        setTasks(tasks.filter(t => t.isCompleted !== true));
     };
     return (
         <div className={'todoapp'}>
@@ -30,16 +46,8 @@ const TodoApp = () => {
             </div>
             <div className="todoapp__content">
                 <div className={'todoapp__tasks'}>
-                    {tasks.map(task =>
-                        <div key={task.name} className={'todoapp__task'}>
-                            <div className={"todoapp__task__state"}
-                                 onClick={e => changeStatus(e, task)}
-                            />
-                            <div className="todoapp__task__name">
-                                {task.name}
-                            </div>
-                            <Delete task={task} remove={deleteTaskHandler}/>
-                        </div>
+                    {sorted.map(task =>
+                        <TodoItem key={task.name} task={task} func={{changeStatus, deleteTask}}/>
                     )}
                 </div>
                 <div className="todoapp__info">
@@ -47,11 +55,11 @@ const TodoApp = () => {
                         {tasks.length + ' items left'}
                     </div>
                     <div className="todoapp__sorting">
-                        <div className="todoapp_sorting--item">All</div>
-                        <div className="todoapp_sorting--item">Active</div>
-                        <div className="todoapp_sorting--item">Completed</div>
+                        <div className={"todoapp__sorting--item" + (sortType === null  ? ' active':'')} onClick={() => setSortType(null)}>All</div>
+                        <div className={"todoapp__sorting--item" + (sortType === false  ? ' active':'')} onClick={() => setSortType(false)}>Active</div>
+                        <div className={"todoapp__sorting--item" + (sortType === true  ? ' active':'')} onClick={() => setSortType(true)}>Completed</div>
                     </div>
-                    <div className="todoapp__clear">
+                    <div className="todoapp__clear" onClick={clearCompleted}>
                         Clear Completed
                     </div>
                 </div>
