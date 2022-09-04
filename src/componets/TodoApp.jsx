@@ -1,11 +1,12 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import TodoItem from "./todoItem";
 
 const TodoApp = () => {
     const [task, setTask] = useState('');
     const [tasks, setTasks] = useState([{id: 1, name: 'test task', isCompleted: false}]);
-    // const [left, setLeft] = useState(0);
+    const [left, setLeft] = useState(0);
     const [sortType, setSortType] = useState(null);
+
     const sorted = useMemo(() => {
         if (sortType === true) {
             return [...tasks].filter(t => t.isCompleted === true);
@@ -34,6 +35,10 @@ const TodoApp = () => {
     const clearCompleted = () => {
         setTasks(tasks.filter(t => t.isCompleted !== true));
     };
+
+    useEffect(() => {
+        setLeft(tasks.filter(t => t.isCompleted === false).length);
+    }, [tasks]);
     return (
         <div className={'todoapp'}>
             <div className="todoapp__input">
@@ -47,17 +52,23 @@ const TodoApp = () => {
             <div className="todoapp__content">
                 <div className={'todoapp__tasks'}>
                     {sorted.map(task =>
-                        <TodoItem key={task.name} task={task} func={{changeStatus, deleteTask}}/>
+                        <TodoItem key={task.id} task={task} func={{changeStatus, deleteTask}}/>
                     )}
                 </div>
                 <div className="todoapp__info">
                     <div className="todoapp__tasksleft">
-                        {tasks.length + ' items left'}
+                        {left+ ' items left'}
                     </div>
                     <div className="todoapp__sorting">
-                        <div className={"todoapp__sorting--item" + (sortType === null  ? ' active':'')} onClick={() => setSortType(null)}>All</div>
-                        <div className={"todoapp__sorting--item" + (sortType === false  ? ' active':'')} onClick={() => setSortType(false)}>Active</div>
-                        <div className={"todoapp__sorting--item" + (sortType === true  ? ' active':'')} onClick={() => setSortType(true)}>Completed</div>
+                        <div className={"todoapp__sorting--item" + (sortType === null ? ' active' : '')}
+                             onClick={() => setSortType(null)}>All
+                        </div>
+                        <div className={"todoapp__sorting--item" + (sortType === false ? ' active' : '')}
+                             onClick={() => setSortType(false)}>Active
+                        </div>
+                        <div className={"todoapp__sorting--item" + (sortType === true ? ' active' : '')}
+                             onClick={() => setSortType(true)}>Completed
+                        </div>
                     </div>
                     <div className="todoapp__clear" onClick={clearCompleted}>
                         Clear Completed
