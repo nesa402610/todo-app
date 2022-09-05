@@ -145,6 +145,9 @@ header {
 .todoapp__sorting--item.active {
     color: var(--BrightBlue);
 }
+.todoapp__sorting.mobile {
+    display: none;
+}
 
 .todoapp__info {
     color: var(--DarkGrayishBlue);
@@ -162,5 +165,37 @@ input {
     color: white;
     width: 100%;
     caret-color: var(--BrightBlue);
+}
+
+@media (max-width: 500px) {
+    header, .todoapp {
+        width: 100%;
+    }
+    header {
+        padding: 2rem;
+        font-size: 2rem;
+    }
+    .todoapp {
+        padding: 0 2rem;
+    }
+    body::before {
+        background: url(img/bg-mobile-dark.jpg);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    .todoapp__sorting {
+        display: none;
+    }
+    .todoapp__sorting--item:hover {
+        color: var(--BrightBlue);
+    }
+    .todoapp__sorting.mobile {
+        background-color: #25273c;
+        margin-top: 2rem;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+
+    }
 }
 

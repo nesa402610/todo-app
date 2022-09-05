@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import TodoItem from "./todoItem";
 import SortSelectors from "./sortSelectors";
 import check from "../img/icon-check.svg";
+import SortSelectorsMobile from "./sortSelectors__mobile";
 
 const TodoApp = () => {
     //Стейты одной таски и массив тасков
@@ -85,6 +86,7 @@ const TodoApp = () => {
                     </div>
                 </div>
             </div>
+            <SortSelectorsMobile sortType={sortType} setSortType={setSortType}/>
         </div>
     );
 };
