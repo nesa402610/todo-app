@@ -1,16 +1,28 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import TodoItem from "./todoItem";
+import SortSelectors from "./sortSelectors";
+import check from "../img/icon-check.svg";
 
 const TodoApp = () => {
-    const [task, setTask] = useState('');
-    const [tasks, setTasks] = useState([{id: 1, name: 'test task', isCompleted: false}]);
+    //Стейты одной таски и массив тасков
+    const [task, setTask] = useState({id: '', name: '', isCompleted: false});
+    const [tasks, setTasks] = useState([
+        {id: 1, name: 'Завершить курс по JavaScript', isCompleted: true},
+        {id: 2, name: 'Пробежка вокруг парка', isCompleted: false},
+        {id: 3, name: 'Сыграть в Dota 2', isCompleted: false},
+        {id: 4, name: 'Завершить этот TodoApp', isCompleted: false},
+        {id: 5, name: 'Сыграть в Minecraft', isCompleted: true},
+    ]);
+    //Невыполненные таски
     const [left, setLeft] = useState(0);
+    //Сортировка по...
     const [sortType, setSortType] = useState(null);
 
+    //Не шарю за юзмемо, но так лучше делать. Вывод сортированных и не сортированных здесь
     const sorted = useMemo(() => {
-        if (sortType === true) {
+        if (sortType === 'Completed') {
             return [...tasks].filter(t => t.isCompleted === true);
-        } else if (sortType === false) {
+        } else if (sortType === 'Active') {
             return [...tasks].filter(t => t.isCompleted === false);
         } else {
             return tasks;
@@ -19,8 +31,8 @@ const TodoApp = () => {
 
     const addTask = (e) => {
         if (e.key === 'Enter') {
-            setTasks([...tasks, {id: Date.now(), name: task, isCompleted: false}]);
-            setTask('');
+            setTasks([...tasks, {id: Date.now(), name: task.name, isCompleted: task.isCompleted}]);
+            setTask({id: '', name: '', isCompleted: false});
         }
     };
     const deleteTask = (task) => {
@@ -42,10 +54,18 @@ const TodoApp = () => {
     return (
         <div className={'todoapp'}>
             <div className="todoapp__input">
+                <div className={"todoapp__task__state" + (task.isCompleted ? ' completed' : '')}
+                     onClick={() => setTask({...task, isCompleted: !task.isCompleted})}
+                >
+                    {task.isCompleted ?
+                        <img src={check} alt=""/>
+                        : ''
+                    }
+                </div>
                 <input type="text"
                        placeholder={'Create a new todo...'}
-                       value={task}
-                       onChange={e => setTask(e.target.value)}
+                       value={task.name}
+                       onChange={e => setTask({...task, name: e.target.value})}
                        onKeyPress={e => addTask(e)}
                 />
             </div>
@@ -57,19 +77,9 @@ const TodoApp = () => {
                 </div>
                 <div className="todoapp__info">
                     <div className="todoapp__tasksleft">
-                        {left+ ' items left'}
+                        {left + ' items left'}
                     </div>
-                    <div className="todoapp__sorting">
-                        <div className={"todoapp__sorting--item" + (sortType === null ? ' active' : '')}
-                             onClick={() => setSortType(null)}>All
-                        </div>
-                        <div className={"todoapp__sorting--item" + (sortType === false ? ' active' : '')}
-                             onClick={() => setSortType(false)}>Active
-                        </div>
-                        <div className={"todoapp__sorting--item" + (sortType === true ? ' active' : '')}
-                             onClick={() => setSortType(true)}>Completed
-                        </div>
-                    </div>
+                    <SortSelectors sortType={sortType} setSortType={setSortType}/>
                     <div className="todoapp__clear" onClick={clearCompleted}>
                         Clear Completed
                     </div>

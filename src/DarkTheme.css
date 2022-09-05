@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
 
-.todoapp_clear, .todoapp__sorting--item {
+.todoapp_clear, .todoapp__sorting--item, .todoapp__clear {
     cursor: pointer;
 }
+
 :root {
     --BrightBlue: hsl(220, 98%, 61%);
     --VeryDarkBlue: hsl(235, 21%, 11%);
@@ -25,7 +26,30 @@ body {
     margin: 0;
     padding: 0;
 }
-
+body::before {
+    content: '';
+    background: url(img/bg-desktop-dark.jpg);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-size: contain;
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem;
+    font-size: 3rem;
+    color: #fff;
+    font-weight: bold;
+    width: 700px;
+    margin: auto;
+    margin-top: 2rem;
+}
 .container {
     width: 1440px;
 }
@@ -42,62 +66,101 @@ body {
 }
 
 .todoapp__input {
-    background-color: var(--VeryDarkGrayishBlueDark);
+    background-color: var(--VeryDarkDesaturatedBlue);
     border-radius: 4px;
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
 }
+
 .todoapp__content {
     border-radius: 4px;
-    background-color: var(--VeryDarkGrayishBlueDark);
-}
+    background-color: var(--VeryDarkDesaturatedBlue);
+    box-shadow: 0 10px 42px 0 black;}
+
 .todoapp__task {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--VeryDarkGrayishBlue);
+    border-bottom: 1px solid var(--VeryDarkGrayishBlueDark);
     padding: 1rem;
 }
 
 .todoapp__task__state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 20px;
     height: 20px;
     position: absolute;
     border-radius: 50%;
-    border: 1px solid var(--VeryDarkGrayishBlue);
+    border: 1px solid var(--VeryDarkGrayishBlueDark);
 }
+.todoapp__task__state:hover {
+    -moz-border-image: var(--CheckBackground);
+}
+
+.todoapp__task__name.completed {
+    text-decoration: line-through;
+    color: var(--DarkGrayishBlue);
+}
+
 .todoapp__task__state.completed {
     background: var(--CheckBackground);
 }
+
 .todoapp__task__name {
     margin-left: 2rem;
     width: 100%;
+    color: var(--LightGrayishBlueHover);
 }
-.todoapp__task__delete {
+
+.todoapp__task:hover > .todoapp__task__delete {
     display: flex;
 }
+
+.todoapp__task__delete {
+    display: none;
+    cursor: pointer;
+}
+
 .todoapp__task__delete path {
     fill: var(--DarkGrayishBlue);
 }
+
 .todoapp__info {
     display: flex;
     justify-content: space-between;
     padding: 1rem;
     font-size: .85rem;
 }
+
 .todoapp__sorting {
     display: flex;
     gap: 1rem;
+    font-weight: bold;
 }
+
 .todoapp__sorting--item.active {
     color: var(--BrightBlue);
 }
+
+.todoapp__info {
+    color: var(--DarkGrayishBlue);
+}
+.todoapp_clear:hover, .todoapp__sorting--item:hover {
+    color: white;
+}
+
 input {
     outline: none;
     border: none;
     background-color: transparent;
-    padding: 1rem;
     font: inherit;
+    margin-left: 2rem;
     color: white;
     width: 100%;
+    caret-color: var(--BrightBlue);
 }
 

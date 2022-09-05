@@ -1,5 +1,7 @@
 import React from 'react';
 import Delete from "./UI/delete";
+import check from '../img/icon-check.svg';
+
 
 const TodoItem = ({task, func}) => {
         const changeStatusHandler = (id) => {
@@ -12,8 +14,13 @@ const TodoItem = ({task, func}) => {
             <div className={'todoapp__task'}>
                 <div className={"todoapp__task__state" + (task.isCompleted ? ' completed' : '')}
                      onClick={() => changeStatusHandler(task.id)}
-                />
-                <div className="todoapp__task__name">
+                >
+                    {task.isCompleted ?
+                        <img src={check} alt=""/>
+                        : ''
+                    }
+                </div>
+                <div className={"todoapp__task__name" + (task.isCompleted ? ' completed' : '')}>
                     {task.name} {task.isCompleted}
                 </div>
                 <Delete task={task} remove={deleteTaskHandler}/>
