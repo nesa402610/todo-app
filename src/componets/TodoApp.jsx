@@ -17,7 +17,7 @@ const TodoApp = () => {
     //Невыполненные таски
     const [left, setLeft] = useState(0);
     //Сортировка по...
-    const [sortType, setSortType] = useState(null);
+    const [sortType, setSortType] = useState('All');
 
     //Не шарю за юзмемо, но так лучше делать. Вывод сортированных и не сортированных здесь
     const sorted = useMemo(() => {
