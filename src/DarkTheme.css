@@ -26,6 +26,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 body::before {
     content: '';
     background: url(img/bg-desktop-dark.jpg);
@@ -39,6 +40,7 @@ body::before {
     top: 0;
     left: 0;
 }
+
 header {
     display: flex;
     justify-content: space-between;
@@ -50,6 +52,7 @@ header {
     margin: auto;
     margin-top: 2rem;
 }
+
 .container {
     width: 1440px;
 }
@@ -77,7 +80,8 @@ header {
 .todoapp__content {
     border-radius: 4px;
     background-color: var(--VeryDarkDesaturatedBlue);
-    box-shadow: 0 10px 42px 0 black;}
+    box-shadow: 0 10px 42px 0 black;
+}
 
 .todoapp__task {
     display: flex;
@@ -97,6 +101,7 @@ header {
     border-radius: 50%;
     border: 1px solid var(--VeryDarkGrayishBlueDark);
 }
+
 .todoapp__task__state:hover {
     -moz-border-image: var(--CheckBackground);
 }
@@ -145,6 +150,7 @@ header {
 .todoapp__sorting--item.active {
     color: var(--BrightBlue);
 }
+
 .todoapp__sorting.mobile {
     display: none;
 }
@@ -152,6 +158,7 @@ header {
 .todoapp__info {
     color: var(--DarkGrayishBlue);
 }
+
 .todoapp_clear:hover, .todoapp__sorting--item:hover {
     color: white;
 }
@@ -171,31 +178,38 @@ input {
     header, .todoapp {
         width: 100%;
     }
+
     header {
         padding: 2rem;
         font-size: 2rem;
     }
+
     .todoapp {
         padding: 0 2rem;
     }
+
     body::before {
         background: url(img/bg-mobile-dark.jpg);
         background-repeat: no-repeat;
         background-size: contain;
     }
+
     .todoapp__sorting {
         display: none;
     }
+
     .todoapp__sorting--item:hover {
         color: var(--BrightBlue);
     }
+
     .todoapp__sorting.mobile {
         background-color: #25273c;
         margin-top: 2rem;
         padding: 1rem;
         display: flex;
         justify-content: space-between;
-
+        border-radius: 4px;
+        color: var(--DarkGrayishBlue);
     }
 }
 
